@@ -1,0 +1,33 @@
+import yt_dlp
+def download(video_url, line):
+    video_info = yt_dlp.YoutubeDL().extract_info(
+        url = video_url,download=False
+    )
+    filename = f"{video_info['title']}.mp3"
+    options={
+        'format':'bestaudio/best',
+        'keepvideo':False,
+        #'/'.join(os.getcwd().split('/')[:3]) +
+        'outtmpl':  'Downloads/' + filename,
+    }
+
+    with yt_dlp.YoutubeDL(options) as ydl:
+        ydl.download([video_info['webpage_url']])
+
+    print("Download complete... {}".format(filename))
+    with open("list.txt", "r") as f:
+        lines = f.readlines()
+    with open("list.txt", "w") as f:
+        for line in lines:
+            if line.strip("\n") == url:
+                f.write(line)
+if __name__=='__main__':
+    
+    with open('list.txt') as file:
+        while line := file.readline():
+            url = line
+        
+            print(url)
+            download(url, line)
+        
+
