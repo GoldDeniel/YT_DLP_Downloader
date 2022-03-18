@@ -11,7 +11,7 @@ $ python downloader.py https://youtube.com/watch...
 
 - It can also download entire playlists thanks to yt_dlp. (https://youtube.com/playlist)
 
- <h2>No args (Editor):/h2>
+ <h2>No args (Editor):</h2>
 
 $ python downloader
 
