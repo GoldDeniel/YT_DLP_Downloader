@@ -43,38 +43,46 @@ def __init__():
     isList = False
     url = ''
     path = 'Downloads/'
-    if len(sys.argv) == 2:
-        if sys.argv[1] == 'list':
+    argsLenght = len(sys.argv)
+
+
+    for arg in sys.argv:
+        if arg == 'list':
             isList = True
             with open('list.txt', 'r') as read:
                 
                 while line := read.readline():
                     url = line
                     download(url, isList, path)
-                    print('\nDownloading: ', url)
                 
             with open('list.txt', 'w') as write:
                 write.write('')
             return
-        elif sys.argv[1].startswith(('https://www.youtube.com/watch', 
-        'https://www.twitch.tv/', 
-        'https://clips.twitch.tv/')) or sys.argv[1].startswith('https://www.youtube.com/playlist'):
-            url = sys.argv[1]
+
+    linkIsFound = False
+
+    for arg in sys.argv:
+        if arg.startswith(('https://www.youtube.com/watch', 'https://www.twitch.tv/', 'https://clips.twitch.tv/','https://www.youtube.com/playlist')):
+            if linkIsFound == False: linkIsFound = True
+            url = arg
             isList = False
-    else:
-        print("\nUrl (press ENTER if downloading from list file): ", end='')
-        url = input()
-        print("\nLocation: ", end='')
-        path = input()
-        
-        if url == '':
-            isList = True
-            with open('list.txt', 'r') as read:
+            download(url, isList, path)
+    if linkIsFound: return
+    
+    print(arg)
+    print("\nUrl (press ENTER if downloading from list file) : ", end='')
+    url = input()
+    print("\nLocation (Downloads/) : ", end='')
+    path = input()
+    if path == '':
+        path = 'Downloads/'
+    if url == '':
+        isList = True
+        with open('list.txt', 'r') as read:
+            
+            while line := read.readline():
+                url = line
+                download(url, isList, path)
                 
-                while line := read.readline():
-                    url = line
-                    download(url, isList, path)
-                    print('\nDownloading: ', url)
-            return
-    download(url, isList, path)
+        return
 __init__()
