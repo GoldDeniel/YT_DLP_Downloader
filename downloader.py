@@ -69,7 +69,6 @@ def __init__():
             download(url, isList, path)
     if linkIsFound: return
     
-    print(arg)
     print("\nUrl (press ENTER if downloading from list file) : ", end='')
     url = input()
     print("\nLocation (Downloads/) : ", end='')
@@ -78,11 +77,13 @@ def __init__():
         path = 'Downloads/'
     if url == '':
         isList = True
+        print('the input was ', url)
         with open('list.txt', 'r') as read:
             
             while line := read.readline():
                 url = line
                 download(url, isList, path)
-                
+    else:
+        download(url, isList, path)           
         return
 __init__()
